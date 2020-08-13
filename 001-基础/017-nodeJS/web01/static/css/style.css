@@ -1,0 +1,32 @@
+h1{
+    padding: 4px 9px;
+    background:gray none;
+    color: whitesmoke;
+    text-align: center;
+}
+figure{
+    display: block;
+    width: 50%; float: none;
+    margin: 5px auto; padding: 4px;
+    border: 1px solid gray;
+}
+figcaption{
+    
+    text-align: center;
+}
+img{
+    width: 100%; height: auto;
+}
+
+dl{
+    display: table;
+    margin: 30px auto;
+}
+dl dt{
+    margin-bottom: 9px; padding: 0px 30px;
+    border-bottom: 3px double #bbb;
+    text-align: center;
+}
+dl dd{
+    margin-inline-start: 30px;
+}

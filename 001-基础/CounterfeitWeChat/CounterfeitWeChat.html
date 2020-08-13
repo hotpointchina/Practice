@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/css.css" />
+<style>
+	html,
+	body{
+		width:100%; height:calc(100% - 70px); float:none;
+		margin:0px; padding:0px;
+		background:linear-gradient(90deg, #9091b7, #c5b5d1);
+	}
+	input::-ms-clear, 
+	input::-ms-reveal{display: none;}
+	.world{
+		width:278px; height:565px; float:none;
+		margin:70px auto auto auto;
+		background:url('images/iPhone.png');
+	}
+	.land{
+		position:relative;
+		width:238px; height:424px; float:left;
+		margin:70px 0px 0px 20px; padding:0px;
+		background:#fff none;
+	}
+	.land .co{
+		width:208px; height:365px; float:left;
+		margin:0px; padding:0px 15px 6px 15px;
+		background:transparent none;
+		border:0px;
+		overflow:hidden;
+	}
+	.land .co ul{
+		width:242px; height:365px; float:left;
+		margin:0px; padding:0px;
+		background:transparent none;
+		border:0px;
+		overflow-y:auto;
+		overflow-x:hidden;
+		-ms-scroll-chaining: chained;
+	    -ms-overflow-style: none;
+	    -ms-content-zooming: zoom;
+	    -ms-scroll-rails: none;
+	    -ms-content-zoom-limit-min: 100%;
+	    -ms-content-zoom-limit-max: 500%;
+	    -ms-scroll-snap-type: proximity;
+	    -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
+	    -ms-overflow-style: none;		
+		overflow: -moz-scrollbars-vertical;
+	}	
+	.land .co ul::-o-scrollbar-button{
+		display:none;
+	}
+	.land .co ul::-webkit-scrollbar{
+		display:none;
+		width:0 !important;
+		background: transparent;
+	}
+	.land .co ul li,
+	.land .co ul li.me{
+		position:relative;
+		width:166px; height:auto; float:left;
+		margin:0px 0px 20px 0px; padding:0px 0px 0px 42px;
+		background:transparent none;
+		border:0px;
+	}
+	.land .co ul li:first-of-type{		
+		margin-top:15px; 
+	}
+	.land .co ul li.me{
+		width:208px;
+		padding:0px;
+	}
+	.land .co ul li img,
+	.land .co ul li.me img{
+		position:absolute;
+		top:1px; left:1px;
+		z-index:1;
+		width:36px; height:36px; float:left;
+		margin:0px; padding:0px;
+		border:0px;
+		border-radius:2px;
+	}
+	.land .co ul li.me img{
+		right:1px; left:auto;
+		float:right;
+	}	
+	.land .co ul li span,
+	.land .co ul li.me span{
+		max-width:calc(100% - 16px); height:auto; float:left;
+		margin:0px; padding:8px;
+		background:#e5e5e5 none;
+		border:0px;
+		border-radius:8px;
+		color:#333;
+		font-size:16px; line-height:22px;
+	}
+	.land .co ul li.me span{
+		max-width:calc(100% - 58px); float:right;
+		margin-right:42px;	
+		background:#bab5cf none;
+	}
+	.land section{
+		position:absolute;
+		bottom:0px; left:0px;
+		z-index:1;
+		width:calc(100% - 16px); height:36px; float:left;
+		margin:0px; padding:8px;
+		background:#e5e5e5 none;
+		border:0px;
+	}
+	.land section i{
+		width:36px; height:36px; float:left;
+		margin:0px; padding:0px;
+		background-color:transparent;
+		background-size:36px 36px;
+		border-radius:2px;
+	}
+	.land section input{
+		width:112px; height:36px; float:left;
+		margin:0px 0px 0px 8px; padding:0px 6px;
+		background:#fcfcfc none;
+		border-radius:4px;
+		color:#333;
+		font:14px/36px SimSun;
+	}
+	.land section em{
+		width:46px; height:36px; float:right;
+		margin:0px; padding:0px;
+		background:#599eff none;
+		border:0px;
+		border-radius:4px;
+		color:#fff;
+		font:14px/36px 'YouYuan';
+		text-align:center;
+		cursor:pointer;
+	}
+</style>
+
+<title>模拟微信聊天</title>
+</head>
+<body>
+	<div class="world">
+		<div class="land">
+			<div class="co">
+				<ul id="room">
+					<li class="me">
+						<img src="images/Photo004.jpg" />
+						<span>“好无聊啊，我们玩个游戏吧！”</span>
+					</li>
+					<li>
+						<img src="images/Photo002.jpg" />
+						<span>“什么游戏？”</span>
+					</li>
+					<li class="me">
+						<img src="images/Photo004.jpg" />
+						<span>“你来模仿啄木鸟。”</span>
+					</li>
+					<li>
+						<img src="images/Photo002.jpg" />
+						<span>“啄木鸟怎么模仿？”</span>
+					</li>
+					<li class="me">
+						<img src="images/Photo004.jpg" />
+						<span>“你就把我的脸当成树就好了啊!”</span>
+					</li>
+				</ul>
+			</div>			
+			<section>
+				<i id='icon'></i>
+				<input id="say" type="text" onkeypress="isure(event)" />
+				<em id="sure">发送</em>
+			</section>
+		</div>
+	</div>
+<script>
+	let _room = document.getElementById('room');
+	let _liTotal = _room.querySelectorAll('li').length;
+	let _lastLi = _room.querySelectorAll('li')[_liTotal - 1];
+	let _icon = document.getElementById('icon');
+	let _say = document.getElementById('say');
+	let _sure = document.getElementById('sure');
+	let _who = 'boy';
+	let _boyIcon = 'background-image:url(images/Photo004.jpg)';
+	let _girlIcon = 'background-image:url(images/Photo002.jpg)';
+	if(_lastLi.getAttribute("class")){
+		_icon.style.cssText = _girlIcon;
+		_who = 'girl';
+	}else{
+		_icon.style.cssText = _boyIcon;
+		_who = 'boy';
+	}
+	_sure.onclick = function(){
+		sayWhat();
+	}
+	function isure(event){
+		let _key = event.which || event.keyCode;
+		document.getElementById('say').innerHTML = _key;
+		if(_key == 13){
+			sayWhat();
+		}
+	}
+	function roomHeight(){
+		let _roomH01 = parseInt(getStyle(_room, 'height'));
+		let _nlih = _room.querySelectorAll('li');
+		let _li_j = _room.querySelectorAll('li').length;
+		let _fakeHeight = 0;
+		let _li_height = 0;
+		for(let i=0; i<_li_j; i++){
+			let _h = parseInt(getStyle(_nlih[i], 'height'));
+			_fakeHeight += _h;
+		}
+		_li_height = _fakeHeight + (20 * _li_j)+15;		//第一个 li 有一个 margin-top:15px;
+		let _go = _li_height - _roomH01;
+		_room.scrollTop = _go;
+	}
+	roomHeight();
+	function sayWhat(){
+		if(_say.value){
+			sentSay();
+			_say.value = '';
+			let _roomH01 = parseInt(getStyle(_room, 'height'));
+			let _nlih = _room.querySelectorAll('li');
+			let _li_j = _room.querySelectorAll('li').length;
+			let _fakeHeight = 0;
+			for(let i=0; i<_li_j; i++){
+				let _h = parseInt(getStyle(_nlih[i], 'height'));
+				_fakeHeight += _h;
+			}			
+			let _li_height = _fakeHeight + (20 * _li_j)+15;		 
+			let _def = _li_height - _roomH01; 
+			let _liAll = _room.querySelectorAll('li');
+			let _lij = _liAll.length;
+			let _liLast = _liAll[_lij - 1];			
+			let _scrollNow = _room.scrollTop;
+			let _liLastH = parseInt(getStyle(_liLast, 'height'));
+			let _gonow = _liLastH + 40 + 6 + (_def);
+			_room.scrollTop = _gonow + _scrollNow;
+		}		
+	}
+	function sentSay(){
+		if(_who == 'girl'){			
+			let _newGirl = document.createElement('li');
+			_newGirl.innerHTML = '<img src="images/Photo002.jpg" />' 
+								 + '<span>' + _say.value + '</span>';
+			_room.appendChild(_newGirl);
+			_icon.style.cssText = _boyIcon;
+			_who = 'boy';
+		}else{
+			let _newBoy = document.createElement('li');
+			_newBoy.className = 'me';
+			_newBoy.innerHTML = '<img src="images/Photo004.jpg" />' 
+								 + '<span>' + _say.value + '</span>';
+			_room.appendChild(_newBoy);
+			_icon.style.cssText = _girlIcon;
+			_who = 'girl';
+		}
+	}
+	function getStyle(el, attr){
+		return document.defaultView.getComputedStyle(el, null)[attr];
+	}
+</script>
+</body>
+</html>

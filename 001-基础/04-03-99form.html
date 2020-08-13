@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+    *{
+        width:auto; height: auto;
+        margin: 0px; padding: 0px;
+        background:transparent none;
+        border: 0px;
+        color: #fff;
+        font-family:Georgia, 'Micorsoft yahei';
+        font-size: 16px; line-height:28px;
+        font-weight: bold;
+        font-style: normal;
+        text-align: center;
+        list-style: none;
+        clear: none;
+    }
+    body{
+        background: linear-gradient(90deg, #8077f7, #bab6fc);
+    }
+    .cl{
+        clear: both;
+    }
+    .land{
+        width: 1000px;
+        margin: 30px auto; 
+    }
+    .land ul{
+        float: none;
+        margin: 0px auto; padding: 30px; 
+        background: #fff none;
+        border-radius: 10px;
+        box-shadow: 2px 5px 30px 6px rgba(0,0,0,.3);
+    }
+    .land ul li{
+        width: 100%; float: left;
+        padding: 0px; 
+        background:transparent none;
+        clear: both;
+    }
+    .land ul li b{
+        width:100px; float: left;
+        margin: 2px; padding:0px; 
+        background:transparent none;
+        border-radius: 6px;
+        box-shadow: 2px 2px 4px 0px rgba(0,0,0,.3);
+    }
+    .land ul li:nth-of-type(1) b{background:#74bc62 none; }
+    .land ul li:nth-of-type(2) b{background:#4fbc7c none; }
+    .land ul li:nth-of-type(3) b{background:#46beae none; }
+    .land ul li:nth-of-type(4) b{background:#44bcde none; }
+    .land ul li:nth-of-type(5) b{background:#3b97ed none; }
+    .land ul li:nth-of-type(6) b{background:#4263ed none; }
+    .land ul li:nth-of-type(7) b{background:#5851ed none; }
+    .land ul li:nth-of-type(8) b{background:#8555ed none; }
+    .land ul li:nth-of-type(9) b{background:#a158ef none; }
+</style>
+
+
+<title>九九乘法表</title>
+</head>
+<body>
+    
+    <div class="land">
+        <ul></ul>
+        <div class="cl"></div>
+    </div>
+
+<script>
+    let ul = document.querySelector('.land>ul');
+
+    for(let i=1; i<10; i++){
+        let l = document.createElement('li');
+        
+        
+        for(let j=0;j<i;j++){
+            let b = document.createElement('b');
+            b.textContent = (j+1) + ' x ' + i + ' = ' + ((j+1)*i);
+            l.appendChild(b);
+        }
+        ul.appendChild(l);
+    }
+  
+    let cl = document.createElement('div');
+    cl.className = 'cl';
+    ul.appendChild(cl);
+</script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+

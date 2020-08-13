@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+    z-time{
+        display: block;
+        width: 100%;
+        margin: 20px 0px; padding:20px;
+        background: rgb(231, 242, 246) none;
+        border: 3px double gray;
+        color: rgb(42, 42, 47);
+        font-size: 50px; line-height: 60px;
+        font-weight: bold;
+        text-align: center;
+        box-sizing: border-box;
+    }
+</style>
+<title>XMLHttpRequest</title>
+</head>
+<body>
+    <h1>XMLHttpRequest</h1>
+
+    
+    <z-time>rrr</z-time>
+    
+    <button>校准时间</button>
+
+
+<script>
+    
+    // 设置时间
+    customElements.define('z-time', class Time extends HTMLElement{
+        constructor(){
+            super();
+        }
+    });
+
+    let clock = you('z-time');
+    let date = new Date();
+    let nowTime = {
+        year:date.getFullYear(),
+        month:addZero(date.getMonth()+1),
+        date:addZero(date.getDate()),
+        hours:addZero(date.getHours()),
+        minutes:addZero(date.getMinutes()),
+        seconds:addZero(date.getSeconds())
+    };
+    clock.textContent = formatTime(nowTime);    
+    
+    // 在线时间 API
+    let timeAPI = [
+        {
+            name:'suning',
+            url:'http://quan.suning.com/getSysTime.do',
+            status:true
+        },
+        {
+            // 有跨域问题，暂不处理了
+            name:'taobao',
+            url:'http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp',
+            status:true
+        }
+    ];
+    timeAPI.forEach(api=>{
+        api.cb = timeRequest;
+    });
+    let chose = '';
+
+
+    // 校验时间
+    let btn = you('button');
+    nowTime = new Proxy(nowTime, {
+        get(target, key){
+            // console.log(newValue);
+            return target[key];
+        },
+        set(target, key, newValue){
+            // console.log(newValue);
+            return target[key] = newValue;
+        }
+    });
+    btn.onclick = ()=>{
+        checkTime();
+        clock.textContent = formatTime(nowTime);
+    };
+
+
+
+    async function checkTime(){
+        for(let i=0; i<timeAPI.length; i++){
+            let result = await timeAPI[i].cb();
+            // console.log(result);
+            if(result){
+                clock.textContent = formatTime(nowTime);
+                // console.log('checkTime()  ',formatTime(nowTime));
+                break ;
+            }
+        }
+    }
+    function timeRequest(){
+        return new Promise(resolve=>{
+            let xhr = new XMLHttpRequest();
+            // console.log('this-->', this.url);
+            xhr.open('get', this.url, true);
+            xhr.onload = ()=>{
+                Object.assign(nowTime, JSON.parse(xhr.responseText));
+                let status = timeOnline({
+                    ...JSON.parse(xhr.responseText),
+                    name:this.name
+                });
+                if(!status){
+                    this.status = false;
+                    resolve(false);
+                }else{
+                    chose = this;
+                    resolve(true);
+                }
+            };
+            xhr.send();
+        });
+    }
+
+
+    let saveOnLineTime = false;
+    // 获取在线时间
+    function timeOnline(obj){
+        obj = {...obj};
+        // console.log('在线时间-->',obj);
+        let gTime = 0;
+        if(obj.name == 'suning'){
+            // 现成的 时间字符串
+            for(let key in obj){
+                let value = obj[key];
+                if(value.length > 14){
+                    // gTime = Number(value);
+                    // console.log('现成的 时间字符串', value);
+                    // clock.textContent = value;
+                    let timeOBJ = {
+                        ymd:value.split(' ')[0],
+                        hms:value.split(' ')[1]
+                    };
+                    timeOBJ.ymd = timeOBJ.ymd.split('-').map(char=>Number(char));
+                    timeOBJ.hms = timeOBJ.hms.split(':').map(char=>Number(char));
+                    let date = new Date(timeOBJ.ymd[0],timeOBJ.ymd[1],timeOBJ.ymd[2],timeOBJ.hms[0],timeOBJ.hms[1],timeOBJ.hms[2]);
+                    
+                    reGetNowTime(date);
+                    saveOnLineTime = date.getTime();
+                    // console.log(data);
+                    // console.log(data.getDate());
+                    // console.log(data.getTime());
+                    break;
+                }
+            }
+            return true;
+        }else{
+            // getTime - 淘宝
+            console.log('getTime - 淘宝');
+
+            for(let key in obj){
+                let value = obj[key];
+                if(Number(value) && value.length>= 14){
+                    gTime = Number(value);
+                    // console.log(value,gTime);
+                }
+            }
+            let date = new Date(gTime);
+            if(date == 'Invalid Date'){
+                return false;
+            }else{
+                // nowTime.year = date.getFullYear();
+                // nowTime.month = addZero(date.getMonth()+1);
+                // nowTime.date = addZero(date.getDate());
+                // nowTime.hours = addZero(date.getHours());
+                // nowTime.minutes = addZero(date.getMinutes());
+                // nowTime.seconds = addZero(date.getSeconds());
+                
+                reGetNowTime(date);
+                saveOnLineTime = date.getTime();
+                return true;
+            }
+        }
+    }
+
+    // 给 nowTime 赋值 --> 在线时间
+    function reGetNowTime(date){
+        // let date = new Date(d);
+        
+        nowTime.year = date.getFullYear();
+        nowTime.month = addZero(date.getMonth());
+        nowTime.date = addZero(date.getDate());
+        nowTime.hours = addZero(date.getHours());
+        nowTime.minutes = addZero(date.getMinutes());
+        nowTime.seconds = addZero(date.getSeconds());
+
+        clock.textContent = formatTime(nowTime);
+        // console.log('nowTime-->', nowTime,date);
+    }
+
+
+
+    let keeping = setInterval(() => {
+        if(saveOnLineTime){
+            // 测试一下，每秒 0.5kb 左右
+            chose.cb();
+        }else{
+            checkTime();
+            console.log(nowTime);
+        }
+    }, 1000);
+
+
+        
+
+    function addZero(num){
+        if(num>0){
+            return num<10 ? '0'+num : num;
+        }else{
+            return '0'+num;
+        }
+    }
+
+    // 接收 obj 返回时间字符串
+    function formatTime(obj){
+        // console.log(obj);
+        return `${obj.year}-${obj.month}-${obj.date}` + '   '
+                        + `${obj.hours}:${obj.minutes}:${obj.seconds}`;
+    }
+
+
+    function you(el,parent){
+        let p = parent || document;
+        let k = p.querySelectorAll(el);
+        return k = k.length == 1 ? k[0] : k;
+    }
+</script>    
+</body>
+</html>

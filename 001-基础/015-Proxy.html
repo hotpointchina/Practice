@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proxy</title>
+</head>
+<body>
+    <h1>Proxy</h1>
+    <pre>
+        <code>
+            let obj = {
+                api:'mtop.common.getTimestamp',
+                ret:'SUCCESS::接口调用成功',
+                data:new Date()
+            }
+        </code>
+    </pre>
+
+    <figure role="img" aria-labelledby="cow-caption">
+        <pre>
+        ___________________________
+      < 更改、代理的是上面的 obj >
+        ---------------------------
+               \   ^__^ 
+                \  (oo)\_______
+                   (__)\       )\/\
+                       ||----w |
+                       ||     ||
+        </pre>
+        <figcaption id="cow-caption">
+            点击下面的按钮，出发代理
+        </figcaption>
+      </figure>
+
+      <br><hr><br>
+      <div class="get">
+          <button>获取 obj</button><b></b>
+      </div>
+      <br>
+      <div class="set">
+          <button>设置 obj</button><b></b>
+      </div>
+
+<script>
+{
+    let obj = {
+        api:'mtop.common.getTimestamp',
+        ret:'SUCCESS::接口调用成功',
+        date:new Date()
+    }
+
+    obj = new Proxy(obj,{
+        get(target,key){
+            console.log('get-->', target);
+            return target[key];
+        },
+        set(target,key,newValue){
+            console.log('set-->', target, newValue);
+            target[key] = newValue;
+            return target[key];
+        }
+    });
+
+    $('.get>button').onclick = ()=>{
+        // console.log('111');
+        $('.get>b').textContent = obj.date;
+    };
+
+    $('.set>button').onclick = ()=>{
+        obj.api = 'Change';
+        $('.set>b').textContent = obj.api;
+    };
+}    
+function $(el,parent){
+    let p = parent || document;
+    let k = p.querySelectorAll(el);
+    return k = k.length==1 ? k[0] : k;
+}
+</script>    
+</body>
+</html>

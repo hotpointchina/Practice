@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>02-case</title>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="shortcut icon" href="images/hotpoint.ico" />
+	<style>		
+		h1,h2{
+			width:100%; float:left;
+			margin-bottom:16px;
+			background:transparent none;
+			font-size:36px; line-height:38px;
+			text-align:center;
+			clear:both;
+		}
+		h2{
+			font-size:22px; line-height:24px;
+		}
+		
+		.box{
+			position:relative;
+			width:800px; height:500px; float:none;
+			margin:50px auto 0px auto; padding:20px;
+			background:#f1f1f1 none;
+			border:1px #ddd solid;
+			clear:both;
+		}
+		.box h1{
+			width:100%; float:left;
+			margin:0px;
+			background:transparent none;
+			font-size:22px; line-height:24px;
+			clear:both;
+		}
+		.box h1 i,
+		.box h1 b{
+			width:auto; float:left;
+			margin:0px;
+			background:transparent none;
+			font-size:22px; line-height:24px;
+			clear:none;
+		}
+		.box h1 b{
+			height:16px;
+			padding:4px 8px;
+			background:darkred none;
+			color:#fff;
+			font-size:14px; line-height:16px;
+			cursor:pointer;
+		}
+		#show{
+			width:100px; height:100px; float:left;
+			margin:20px 0px 0px 0px;
+			border:3px #222 solid;
+		}
+
+		#cbox{
+			display:none;
+			position:absolute;
+			z-index:3;
+			top:0px; left:0px;
+			width:100%; height:100%; float:none;
+			padding:0px;
+			background:transparent none;
+		}
+		#cbox em{
+			position:absolute;
+			z-index:4;
+			top:0px; left:0px;
+			width:100%; height:100%; float:none;
+			padding:0px;
+			background:rgba(0,0,0,0.3);
+		}
+
+		#cbox .co{
+			position:absolute;
+			z-index:9;
+			bottom:20px; right:20px;
+			width:300px; height:auto; float:right;
+			padding:20px;
+			background:rgba(143,130,188,0.3);
+		}
+		#cbox .co ul{
+			position:relative;
+			width:calc(100% - 40px); height:160px; float:right;
+			padding:20px;
+		}
+		#cbox .co ul h6,
+		#cbox .co ul li{
+			width:100%; height:30px; float:left;
+			margin-bottom:10px;
+		}
+		#cbox .co ul h6 i,
+		#cbox .co ul li i{
+			width:45%; float:left;
+			font-size:16px; line-height:30px;
+			text-align:right;
+		}
+		#cbox .co ul li b,
+		#cbox .co ul li b:hover{
+			width:30px; height:28px; float:left;
+			margin-left:5px; padding:0px 4px;
+			background:#efefef none;
+			border:1px #c0c0c0 solid;
+			border-radius:2px;
+			color:#555;
+			font-size:14px; line-height:28px;
+			text-align:center;
+			cursor:pointer;
+		}
+		#cbox .co ul li b:hover{			
+			background:#f39800 none;
+			border:1px #222 solid;
+			color:#222;
+		}
+		#cbox .co ul h6 b,
+		#cbox .co ul h6 em,
+		#cbox .co ul h6 span{
+			position:relative;
+			width:30px; height:28px; float:left;
+			margin-left:5px; padding:0px 4px;
+			background:red none;
+			border:1px #c0c0c0 solid;
+			border-radius:2px;
+			color:#fff;
+			font-size:14px; line-height:28px;
+			text-align:center;
+			cursor:pointer;
+		}
+		#cbox .co ul h6 em{
+			background:orange none;
+		}
+		#cbox .co ul h6 span{
+			background:blue none;
+		}
+		#cbox .co ul h6 b:hover,
+		#cbox .co ul h6 em:hover,
+		#cbox .co ul h6 span:hover{
+			opacity:0.7;
+		}
+		#cbox .co ul h3{
+			position:relative;
+			width:100%; height:auto; float:right;
+			margin-top:10px;
+			text-align:center;
+		}
+		#cbox .co ul h3 i,
+		#cbox .co ul h3 b{
+			display:inline-table;
+			width:34px; height:auto; float:none;
+			margin:0px 4px; padding:0px 8px;
+			background:steelblue none;
+			color:#fff;
+			font-size:16px; line-height:30px;
+			text-align:center;
+			cursor:pointer;
+		}
+		#cbox .co ul h3 i:hover,
+		#cbox .co ul h3 b:hover{
+			opacity:0.7;
+		}
+	</style>
+
+
+</head>
+<body>
+	<h1>作业：DIV</h1>
+	<h2>给出选择项，使用户可通个点击变化DIV</h2>
+	
+	<div class="cl"></div>
+	<div class="box">
+		<h1>
+			<i>请为下面的DIV设置样式：</i>
+			<b>点击设置</b>
+		</h1>
+		<div class="cl"></div>
+
+		<div id="show"></div>
+		
+		
+		<div id="cbox">		
+			<div class="co">
+				<ul id="here">
+					<h6>
+						<i>请选择背景色：</i>
+						<b>红</b>
+						<em>黄</em>
+						<span>蓝</span>
+					</h6>
+					<li>
+						<i>请选择宽(px)：</i>
+						<b>200</b>
+						<b>300</b>
+						<b>400</b>
+					</li>
+					<li>
+						<i>请选择高(px)：</i>
+						<b>200</b>
+						<b>300</b>
+						<b>400</b>
+					</li>
+
+					<h3>
+						<i>恢复</i>
+						<b>确定</b>
+					</h3>
+				</ul>
+			</div>
+			<em></em>
+		</div>
+
+		<div class="cl"></div>
+	</div>
+
+
+
+
+<script>
+	var _show = document.querySelector("#show");
+	var _set = document.querySelector(".box>h1>b");
+
+	var _cbox = document.querySelector('#cbox');	
+
+	var _red = document.querySelector("#here>h6>b");
+	var _yellow = document.querySelector("#here>h6>em");
+	var _blue = document.querySelector("#here>h6>span");
+
+	
+	
+	//打开设置
+	_set.onclick = function(){
+		_cbox.style.display = 'block';
+	}
+
+
+	//设置颜色
+	function closethiscolor(){
+		_red.removeAttribute('style');
+		_yellow.removeAttribute('style');
+		_blue.removeAttribute('style');
+	}
+	_red.onclick = function(){
+		_show.style.backgroundColor = 'red';
+		closethiscolor();
+		this.style['border-top'] = '3px Olive solid';
+	}
+	_yellow.onclick = function(){
+		_show.style.backgroundColor = 'yellow';
+		closethiscolor();
+		this.style['border-top'] = '3px Olive solid';
+	}
+	_blue.onclick = function(){
+		_show.style.backgroundColor = 'blue';
+		closethiscolor();
+		this.style['border-top'] = '3px Olive solid';
+	}
+
+
+	var _here = document.getElementById("here").getElementsByTagName("li");
+	//宽度	
+	var _showWidth = _here[0].getElementsByTagName("b");
+	var _sw200 = _showWidth[0];
+	var _sw300 = _showWidth[1];
+	var _sw400 = _showWidth[2];
+
+	function closethisw(){
+		_sw200.removeAttribute('style');
+		_sw300.removeAttribute('style');
+		_sw400.removeAttribute('style');
+	}
+	_sw200.onclick = function(){
+		_show.style.width = "200px";
+		closethisw();
+		this.style.cssText = 'border-top:3px Olive solid;background-color:LightBlue';
+		// this.style['border-top'] = '3px Olive solid';	
+		// this.style['background-color'] = 'LightBlue none';	
+	}
+	_sw300.onclick = function(){
+		_show.style.width = "300px";
+		closethisw();
+		this.style.cssText = 'border-top:3px Olive solid;background-color:LightBlue';
+	}
+	_sw400.onclick = function(){
+		_show.style.width = "400px";
+		closethisw();
+		this.style.cssText = 'border-top:3px Olive solid;background-color:LightBlue';
+	}
+
+	
+	//高度
+	var _showHeight = _here[1].getElementsByTagName("b");
+	var _sh200 = _showHeight[0];
+	var _sh300 = _showHeight[1];
+	var _sh400 = _showHeight[2];
+
+	function closethish(){
+		_sh200.removeAttribute('style');
+		_sh300.removeAttribute('style');
+		_sh400.removeAttribute('style');
+	}
+	_sh200.onclick = function(){
+		_show.style.height = "200px";
+		closethish();
+		this.style.cssText = 'border-top:3px Olive solid;background-color:LightBlue';
+	}
+	_sh300.onclick = function(){
+		_show.style.height = "300px";
+		closethish();
+		this.style.cssText = 'border-top:3px Olive solid;background-color:LightBlue';
+	}
+	_sh400.onclick = function(){
+		_show.style.height = "400px";
+		closethish();
+		this.style.cssText = 'border-top:3px Olive solid;background-color:LightBlue';
+	}
+
+
+	//关闭
+	var _close = document.querySelector('#cbox>em');
+	var _okclose = document.querySelector('#here>h3>b');
+	function showclose(){
+		_cbox.style.cssText = '';
+	}
+	_close.onclick = showclose;		//onclick 等于号后面 ，方法名+（）会报错
+	_okclose.onclick = showclose;
+
+
+	//恢复
+	var _regain = document.querySelector('#here>h3>i');
+	_regain.onclick = function(){
+		// _show.style.cssText = '';      //与下面的 removeAttribute('style')  效果类似
+		_show.removeAttribute("style");
+		showclose();
+		closethiscolor();closethisw();closethish();
+	}
+
+	
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

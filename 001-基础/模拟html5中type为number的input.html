@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模拟html5中type为number的input</title>
+</head>
+<body>
+    <h1>模拟html5中type为number的input</h1>
+    <input type="text" />
+
+<script>
+{
+    let inp = document.querySelector('input');
+    inp.addEventListener('input',function(e){
+        console.log(e.target.value);
+        e.target.value = e.target.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'');
+    });
+
+    let mouseScroll = ({el,up,down})=>{
+        el.addEventListener('mousewheel', e=>{
+            if(e.wheelDelta > 0){
+                up && up.call(el, e);
+            }else{
+                down && down.call(el, e);
+            }
+        });
+        el.addEventListener('DOMMousewheel', e=>{
+            if(e.wheelDelta > 0){
+                up && up.call(el, e);
+            }else{
+                down && down.call(el, e);
+            }
+        });
+    };
+
+
+    let wheelUp = new Event('wheelUp');
+    let wheelDown = new Event('wheelDown');
+    let actionUp = ()=>{
+        inp.dispatchEvent(wheelUp);
+    };
+    let actionDown = ()=>{
+        inp.dispatchEvent(wheelDown);
+    };
+
+    mouseScroll({
+        el:inp,
+        up:actionUp,
+        down:actionDown
+    });
+
+    inp.addEventListener('wheelUp', e=>{
+        e.target.focus();
+        console.log('Up');
+        let t = e.target;
+        t.value = t.value.trim() == '' ? 0 : t.value.trim();
+        t.value = parseInt(t.value) - 1;
+    });
+    inp.addEventListener('wheelDown', e=>{
+        e.target.focus();
+        console.log('Down');
+        let t = e.target;
+        t.value = t.value.trim() == '' ? 0 : t.value.trim();
+        t.value = parseInt(t.value) + 1;
+    });
+}    
+</script>    
+</body>
+</html>
