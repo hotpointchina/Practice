@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<style>
+    h1{
+        width: 100%; float: left;
+        clear: both;
+    }
+    dl{
+        width: 100%; float: left;
+        margin-top: 50px;
+        clear: both;
+    }
+    dl dt{
+        width: 100%; float: left;
+        margin-bottom: 10px;
+        color: #333;
+        font-size: 16px; line-height: 20px;
+        font-weight: bold;
+        clear: both;
+    }
+    dl dd{
+        width:50%; float: left;
+        margin-bottom: 10px;
+        color: #333;
+        font-size: 16px; line-height: 20px;
+        clear: both;
+    }
+</style>
+
+<title>Document</title>
+</head>
+<body>
+
+    <h1>原始数据：红蓝蓝黄红黄蓝红红黄红</h1>
+
+    <br><hr>
+    
+    <h3></h3>
+
+    <dl>
+        <dt>题目要求：</dt>
+
+        <dd>在一个字符串数组中有红、黄、蓝三种颜色的球，且个数不相等、顺序不一致，请为该数组排序。使得排序后数组中球的顺序为:黄、红、蓝。</dd>
+        <dd>例如：红蓝蓝黄红黄蓝红红黄红，排序后为：黄黄黄红红红红红蓝蓝蓝。</dd>
+    </dl>
+    
+<script>
+   var h3 = document.querySelector('h3');
+
+
+
+/*
+   var str = '红蓝蓝黄红黄蓝红红黄红';
+   var k = [];
+   k = str.split('');
+   k = k.sort();
+   var word = [];
+   k.forEach((v,key)=>{
+    // console.log(k.splice(0, key, v));
+        if(v == '黄'){
+            word.push(k.splice(0, key, v));
+        }
+   });
+   console.log(k + word);
+
+*/
+
+   var str = '红蓝蓝黄红黄蓝红红黄红'.split('');
+   var obj = {'黄':0,'红':1,'蓝':2};
+
+   var k = str.sort((a,b)=>
+      obj[a] - obj[b]
+   );
+
+   // });
+   console.log(k);
+
+
+   h3.textContent = k;
+
+</script>
+
+</body>
+</html>

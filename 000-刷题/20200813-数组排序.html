@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="./css/style.css" />
+<title>20200813-数组排序</title>
+</head>
+<body>
+    <dl>
+        <dt>题目要求：</dt>
+
+        <dd>let arr = [1, 'a', 123, '巴啦啦', 3, 'hi~', 66, 'anyString'];</dd>
+        <dd>其中的数组项均是一个数字带一个字符串，每一个数字和后面的字符串其实是一组。</dd>
+        <dd>请实现，整个数组基于数字进行排序（后面的字符自动跟在后面），也就是实现如下所示排序结果：</dd>
+        <dd>[1, 'a', 3, 'hi~', 66, 'anyString', 123, '巴啦啦']</dd>
+    </dl>
+    <br /><hr /><br />
+
+</body>
+<script>
+{
+    let arr = [1, 'a', 123, '巴啦啦', 3, 'hi~', 66, 'anyString'];
+    let obj = arr.map((it,index)=>{
+        if(!Number(it)){
+            return {
+                id:arr[index-1],
+                str:it
+            };
+        }else{
+            return false;
+        }
+    }).filter(object=>object).sort((a,b)=>b.id - a.id).map(it=>[it.id,it.str])
+    .reduce((acc, curr)=>{
+        return curr.concat(acc);
+    },[]);
+
+    let article = document.createElement('article');
+    article.textContent = '[' + obj.join(',') + ']';
+
+    let style = document.createElement('style');
+    style.textContent = "article::before{content:'转化结果：'}";
+
+
+    document.documentElement.querySelector('head').appendChild(style);
+    document.body.appendChild(article);
+    console.log('转化结果：', obj);
+}
+</script>    
+</html>
