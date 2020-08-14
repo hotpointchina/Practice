@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实现浮点数相等</title>
+</head>
+<body>
+    <h1>实现浮点数相等</h1>
+
+    <dl>
+        <dt>题目</dt>
+        <dd>
+            <pre>
+                已知：
+
+                0.1 + 0.2 === 0.3;    // 返回值是false
+                请实现一个名为epsEqu的方法，可以实现浮点数相等：
+                
+                epsEqu(0.1 + 0.2) === 0.3;    // 返回值是true
+            </pre>
+        </dd>
+    </dl>
+    <br /><hr /><br />
+
+
+</body>
+<script>
+{
+    let epsEqu = (a,b)=>{
+        if(Number(a) && Number(b)){
+            a = {
+                num:a,
+                len:(''+a).split('.')[1].length
+            };
+            console.log('a-->', (''+a).split('.')[1].length);
+            a.num = a.num * Math.pow(10,a.len);
+        }
+        return a+b;
+    };
+
+
+    console.log(epsEqu(0.133,0.2));
+}    
+</script>
+</html>
+
+
