@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+    body{
+        position: relative;
+        margin: 0px;
+    }
+    .world{
+        position: fixed;
+        width: 100%; height: 100%;
+        margin: 0px;
+        background: linear-gradient(#80c1e4, #d6c3e6) no-repeat;
+    }
+    form{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        width: 80%;
+        margin: 50px 10% 0px; padding: 20px;
+        background: rgba(255, 255, 255, .5);
+        border: 1px solid rgba(255, 255, 255, .9);
+        border-radius: 20px;
+        box-sizing: border-box;
+        box-shadow: 4px 3px 34px 0px rgba(0, 0, 0, .3);
+    }
+    h1{
+        margin-bottom: 50px; padding: 0px 16px 5px;
+        border-bottom: 3px double #888;
+        text-align: center;
+    }
+    input[type="submit"]{
+        margin-top: 60px; padding: 6px 28px;
+        background: dodgerblue none;
+        border: 0px;
+        border-radius: 12px;
+        color: snow;
+        font-size: 20px; line-height: 26px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover{
+        opacity: 0.88;
+    }
+</style>
+<title>上传页面</title>
+</head>
+<body>
+    <div class="world">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <h1>上传页面</h1>
+    
+            <input type="file" name="upIMG" />
+            <input type="submit" value="提交" />
+        </form>
+    </div>
+</body>
+</html>
