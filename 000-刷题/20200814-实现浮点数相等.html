@@ -28,21 +28,38 @@
 <script>
 {
     let epsEqu = (a,b)=>{
+
+        let theNum = (q)=>{
+            if(Number(q)){
+                q = {
+                    num:q,
+                    len:('' + q).split('.')[1].length
+                };
+                q.num = q.num * Math.pow(10, q.len);
+                return q;
+            }
+        };
+
         if(Number(a) && Number(b)){
-            a = {
-                num:a,
-                len:(''+a).split('.')[1].length
-            };
-            console.log('a-->', (''+a).split('.')[1].length);
-            a.num = a.num * Math.pow(10,a.len);
+            a = theNum(a);
+            b = theNum(b);
+            if(a.len === b.len){
+                return (a.num + b.num) / (10 * a.len);
+            }
+            if(a.len > b.len){
+                b.num = (b.num / (10 * b.len)) * (10 * a.len);
+                return (a.num + b.num) / (10 * a.len);
+            }
+            if(a.len < b.len){
+                a.num = (a.num / (10 * a.len)) * (10 * b.len);
+                return (a.num + b.num) / (10 * b.len);
+            }
         }
-        return a+b;
     };
 
 
-    console.log(epsEqu(0.133,0.2));
+    console.log(epsEqu(0.1123,0.2));
 }    
 </script>
 </html>
-
 
