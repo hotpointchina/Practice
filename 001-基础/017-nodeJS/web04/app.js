@@ -22,6 +22,7 @@ app.use( KoaBody({
 app.use(router.routes());
 app.listen(8080,()=>{
     console.log('服务已启动：http://localhost:8080');
+    console.log('作业URL：http://localhost:8080/static/index.html');
 });
 
 
