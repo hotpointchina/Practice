@@ -28,10 +28,15 @@
     }
     h1{
         margin-bottom: 50px; padding: 0px 16px 5px;
+        background: linear-gradient(to bottom, transparent, #2f84b3 80%);
         border-bottom: 3px double #888;
+        color: #222;
         text-align: center;
+        -webkit-text-fill-color:transparent;
+        /* -webkit-background-clip: text; */
     }
-    input[type="submit"]{
+    span,
+    button[type="submit"]{
         margin-top: 60px; padding: 6px 28px;
         background: dodgerblue none;
         border: 0px;
@@ -40,9 +45,16 @@
         font-size: 20px; line-height: 26px;
         cursor: pointer;
     }
-    input[type="submit"]:hover{
+    span{
+        background:darkgray none;
+        font-weight: normal;
+        cursor: not-allowed;
+        user-select: none;
+    }
+    button[type="submit"]:hover{
         opacity: 0.88;
     }
+
 </style>
 <title>上传页面</title>
 </head>
@@ -51,9 +63,52 @@
         <form action="/upload" method="post" enctype="multipart/form-data">
             <h1>上传页面</h1>
     
-            <input type="file" name="upIMG" />
-            <input type="submit" value="提交" />
+            <input type="file" name="upIMG" accept="image/*" />
+            <span title="请先选择要上传的文件">提交</span>
         </form>
     </div>
+
+<script>
+{
+    let form = document.querySelector('form');
+    let submit = document.createElement('button');
+    submit.type = 'submit';
+    submit.textContent = "提交";
+    form.el = {
+        button:submit,
+        inputFile: form.querySelectorAll('input')[0],
+        span: form.querySelector('span')
+    };
+
+    form.onclick = e=>{
+        let k = e.target;
+        if(k.nodeName == 'INPUT'){
+            let inputs = form.querySelectorAll('input');
+            let outerHTML = inputs[0].outerHTML;
+            inputs[0].onchange = (e)=>{
+                if(e.target.files[0]){
+                    let type = e.target.files[0].type.split('/')[0];
+                    console.log(type);
+                    if(type == 'image'){
+                        changeEL(form.el.span, 'button', form);
+                    }else{
+                        alert('请选择【图片】类型的文件');
+                        e.target.outerHTML = outerHTML;
+                        changeEL(form.el.button, 'span', form);
+                    }
+                }else{
+                    changeEL(form.el.button, 'span', form);
+                }
+            };
+        } 
+    };
+}
+function changeEL(del,add,parent){
+    console.log('parent-->',parent);
+    console.log('parent-->',parent.el);
+    del.remove();
+    parent.querySelector(add) ? '' : parent.appendChild(parent.el[add]);
+}
+</script>    
 </body>
 </html>
