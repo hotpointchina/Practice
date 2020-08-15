@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    table{
+        width: 305px;
+        padding: 6px;
+        border: 1px solid #111;
+    }
+</style>
+<title>表单头统一高度问题</title>
+</head>
+<body>
+    <h1>表单头统一高度问题</h1>
+
+
+    <div class="question">
+        <ul>
+            <li>我们日常开发经常会遇到元素宽度不足的情况，尤其在表格中，例如下面这种：</li>
+            <li>结果第2列的标题断成3行了，太丑了，如下图所示：</li>
+            <li><img src="./images/01.png" /></li>
+        </ul>
+        
+
+        <ul>
+            <li>请给th标签设置一段CSS声明，在不改变任何尺寸的情况下，在无论表格内容怎么变化的情况下，只要宽度不足，就是下图所示的排版：</li>
+            <li><img src="./images/02.png" /></li>
+        </ul>
+    </div>
+
+    <br><hr><br>
+
+    <div class="require">
+        <style>
+            thead tr{
+                /* 不允许 CJK (Chinese/Japanese/Korean) 文本中的单词换行，只能在半角空格或连字符处换行。*/
+                word-break: keep-all;
+            }
+        </style>
+        <table>
+            <thead>
+                <tr>
+                    <th>部门</th>
+                    <th>人员姓名(100)</th>
+                    <th>日期</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>体验设计部</td>
+                    <td>张三</td>
+                    <td>2020-04-23</td>
+                    <td>我看你骨骼惊奇，将来必有大成……</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
