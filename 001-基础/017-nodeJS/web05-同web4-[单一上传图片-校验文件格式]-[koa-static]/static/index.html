@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+    body{
+        position: relative;
+        margin: 0px;
+    }
+    .world{
+        position: fixed;
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        width: 100%; height: 100%;
+        margin: 0px;
+        background: linear-gradient(#80c1e4, #d6c3e6) no-repeat;
+    }
+    form{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        width: 80%; min-width: 560px;
+        margin: 50px 10% 0px; padding: 20px;
+        background: rgba(255, 255, 255, .5);
+        border: 1px solid rgba(255, 255, 255, .9);
+        border-radius: 20px;
+        box-sizing: border-box;
+        box-shadow: 4px 3px 34px 0px rgba(0, 0, 0, .3);
+    }
+    h1{
+        margin-bottom: 50px; padding: 0px 16px 5px;
+        background: linear-gradient(to bottom, transparent, #2f84b3 80%);
+        border-bottom: 3px double #888;
+        color: #222;
+        text-align: center;
+        -webkit-text-fill-color:transparent;
+        -webkit-background-clip: text;
+    }
+    span,
+    button[type="submit"]{
+        margin-top: 60px; padding: 6px 28px;
+        background: dodgerblue none;
+        border: 0px;
+        border-radius: 12px;
+        color: snow;
+        font-size: 20px; line-height: 26px;
+        cursor: pointer;
+    }
+    span{
+        background:darkgray none;
+        font-weight: normal;
+        cursor: not-allowed;
+        user-select: none;
+    }
+    button[type="submit"]:hover{
+        opacity: 0.88;
+    }
+    
+    @media screen and (min-width: 700px)  {
+        form{
+            width:560px;
+        }
+    }
+</style>
+<title>上传页面</title>
+</head>
+<body>
+    <div class="world">
+        <!-- 
+            form 表单中的 action 
+            - 如果不填写
+                - 提交到该 html 文件所在的 url 路径
+                - 请求到该 html 文件所在的 url 路径，后去请求对应的 method ，是否有对应的 post、get 等方法。
+            - 填写
+                - 直接请求 action 中填写的  url 路径    
+                - 然后去找其路径下对应的 method 的 post、get 等方法。
+        -->
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <h1>上传页面</h1>
+    
+            <input type="file" name="upIMG" accept="image/*" />
+            <span title="请先选择要上传的文件">提交</span>
+        </form>
+    </div>
+
+<script>
+{
+    let form = document.querySelector('form');
+    let submit = document.createElement('button');
+    submit.type = 'submit';
+    submit.textContent = "提交";
+    form.el = {
+        button:submit,
+        inputFile: form.querySelectorAll('input')[0],
+        span: form.querySelector('span')
+    };
+
+    form.onclick = e=>{
+        let k = e.target;
+        if(k.nodeName == 'INPUT'){
+            let inputs = form.querySelectorAll('input');
+            let outerHTML = inputs[0].outerHTML;
+            inputs[0].onchange = (e)=>{
+                if(e.target.files[0]){
+                    let type = e.target.files[0].type.split('/')[0];
+                    console.log(type);
+                    if(type == 'image'){
+                        changeEL(form.el.span, 'button', form);
+                    }else{
+                        alert('请选择【图片】类型的文件');
+                        e.target.outerHTML = outerHTML;
+                        changeEL(form.el.button, 'span', form);
+                    }
+                }else{
+                    changeEL(form.el.button, 'span', form);
+                }
+            };
+        } 
+    };
+}
+function changeEL(del,add,parent){
+    console.log('parent-->',parent);
+    console.log('parent-->',parent.el);
+    del.remove();
+    parent.querySelector(add) ? '' : parent.appendChild(parent.el[add]);
+}
+</script>    
+</body>
+</html>
