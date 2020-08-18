@@ -1,0 +1,95 @@
+body{
+    position: relative;
+    margin: 0px;
+}
+.world{
+    position: fixed;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    width: 100%; height: 100%;
+    margin: 0px;
+    background: linear-gradient(#80c1e4, #d6c3e6) no-repeat;
+}
+form{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    width: 560px;
+    margin: 50px 10% 0px; padding: 20px;
+    background: rgba(255, 255, 255, .5);
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 20px;
+    box-sizing: border-box;
+    box-shadow: 4px 3px 34px 0px rgba(0, 0, 0, .3);
+}
+h1{
+    margin-bottom: 50px; padding: 0px 16px 5px;
+    background: linear-gradient(to bottom, transparent, #2f84b3 80%);
+    border-bottom: 3px double #888;
+    color: #222;
+    text-align: center;
+    -webkit-text-fill-color:transparent;
+    -webkit-background-clip: text;
+}
+
+
+form label{
+    width: 60%;
+    margin-bottom: 20px;
+    color: rgba(59, 154, 206, .9);
+    clear: both;
+}
+form label input{
+    float: right;
+    padding:0px 4px;
+    background: linear-gradient(transparent, rgba(255, 255, 255, .66) 150%);
+    color: #555;
+    font-size: 18px; line-height: 22px;
+    border: 0px;
+    border-bottom: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 4px;
+}
+form label b{
+    display: block;
+    width: 70px;
+    text-align: right;
+}
+
+span,
+button[type="submit"]{
+    margin-top: 60px; padding: 6px 28px;
+    background: dodgerblue none;
+    border: 0px;
+    border-radius: 12px;
+    color: snow;
+    font-size: 20px; line-height: 26px;
+    cursor: pointer;
+}
+span{
+    background:darkgray none;
+    font-weight: normal;
+    cursor: not-allowed;
+    user-select: none;
+}
+span.ok{
+    margin-top: 60px; padding: 6px 28px;
+    background: dodgerblue none;
+    border: 0px;
+    border-radius: 12px;
+    color: snow;
+    font-size: 20px; line-height: 26px;
+    cursor: pointer;
+}
+span.ok:hover{
+    opacity: 0.88;
+}
+
+section{
+    margin-top: 20px;
+    color: darkred;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0;
+    transition: all 0.9s linear;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>聊天室</title>
+</head>
+<body>
+
+    <div id="room">
+        <ul>
+            <li class="me">
+                <div class="wellcome"></div>
+                <div class="time"></div>
+                <div class="say"></div>
+            </li>
+        </ul>
+    </div>
+
+    <textarea name="" id="textarea" cols="60" rows="10"></textarea>
+    <input type="text" id="content">
+    <button id="btn">发送</button>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        let textarea = document.querySelector('#textarea');
+        let content = document.querySelector('#content');
+        let btn = document.querySelector('#btn');
+
+        let me = '';
+        
+        // 1- 通过http请求，告诉服务器我要使用ws协议了，因为ws协议是根据已有的http协议升级而成的
+        const socket = io('/');
+        socket.on('hello', data => {
+            let obj = JSON.parse(data);
+            // console.log(obj);
+            if(me === ''){
+                me = obj.id;
+                writeData(`${obj.time} - 欢迎您 ${me}`);
+            }else{
+                // 有新的朋友加入 ${socket.id}，我们欢迎！👏他
+                writeData(`${obj.time} - 有新的朋友加入 ${obj.id}，我们欢迎！👏他`);
+            }
+        })
+
+        socket.on('message', data => {
+            // console.log('message-->', data);
+
+            let str = '';
+            let obj = JSON.parse(data);
+            // console.log(obj);
+
+            if(obj.id  == me){
+                str = obj.time + '  我说  ' + obj.str;
+                writeData(str);
+                // textarea.innerHTML += str + '\r\n';
+            }else{
+                str = obj.time + obj.id + '  说：' + obj.str;
+                writeData(str);
+                // textarea.innerHTML += str + '\r\n';
+            }
+        })
+
+        socket.on('userUpdate', data => {
+            console.log(data)
+        })
+
+
+        btn.onclick = function() {
+            // writeData('我说：' + content.value);
+            socket.emit('message', content.value);
+            content.value = '';
+            content.focus();
+        }
+
+        function writeData(data) {
+            textarea.innerHTML += data + '\r\n';
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon" />
+<style>
+    h1,h2{
+        width: 100%;
+        text-align: center;
+    }
+    h1{
+        color: darkcyan;
+        font-size: 50px;
+    }
+</style>
+<title>Go to the Chatroom</title>
+</head>
+<body>
+    <br />
+    <h2>We will enter the Chatroom</h2>
+    <hr />
+    <br /><br />
+    <h1>0</h1>
+
+<script>
+    let n = 0;
+    let h1 = document.querySelector('h1');
+    setInterval(() => {
+        h1.textContent = ++n;
+    }, 1000);
+    setTimeout(()=>{
+        window.location.href = '/public/room.html';
+    }, 5202);
+</script>    
+</body>
+</html>
