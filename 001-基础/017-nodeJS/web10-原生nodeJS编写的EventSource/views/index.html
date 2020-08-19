@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Source</title>
+</head>
+<body>
+    <h1>Event Source</h1>
+    <hr /><br />
+    <div class="box"></div>
+</body>
+<script>
+{
+    let source = new EventSource('/gettime');
+
+    source.addEventListener('open', function(){
+        console.log('连通开始。');
+    });
+
+    source.addEventListener('ztime', (e)=>{
+        let res = JSON.parse(e.data);
+        console.log(res);
+    });
+
+}
+</script>
+</html>
