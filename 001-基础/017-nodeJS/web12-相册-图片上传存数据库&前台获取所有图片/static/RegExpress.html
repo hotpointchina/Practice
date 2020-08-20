@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegExp</title>
+</head>
+<body>
+    <h1>RegExp</h1>
+
+<script>
+{
+    // let str = '"(G:\FrontEnd\A\B\C\G\web\static\upload\upload_629dee6455ec40febe943e4c10e3e6f9.png)"';
+    let xhr = new XMLHttpRequest();
+    xhr.open('get', '/t', true);  // 测试接口已经被去掉了
+
+    xhr.onload = function(){
+        let res = xhr.responseText;
+        let str = JSON.parse(res);
+        str = str.str;
+        let reg = /(?<=upload\\)\w+\.\w{3,4}$/g;
+        console.log(str);
+        console.log(str.match(reg));
+    };
+    xhr.send();
+}
+</script>    
+</body>
+</html>
