@@ -1,0 +1,189 @@
+
+body{
+    position: fixed;
+    top: 0px; left: 0px;
+    z-index: 1;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 100%;
+    margin: 0px; padding: 0px;
+    background: #fff none;
+    background-size: cover;
+    transition: opacity .5s;
+}
+
+#world{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 100%;
+    margin: 0px; padding: 0px;
+    background: #fff url('/public/images/BG.jpg') no-repeat top center;
+    background-size: cover;
+}
+
+
+.content{
+    position: relative;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 260px; min-height: 290px;
+    margin-top:-150px;
+    background: rgba(199, 199, 199, .37);;
+    border: 1px solid rgba(0, 0, 0, .39);
+    border-radius: 8px;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .3);
+}
+.content h1{
+    position: relative;
+    width: 100%;
+    margin: 0px; padding: 12px 0px;
+    background: transparent none;
+    color: #fff;
+    font-size: 24px;
+    font-family: 'YouYuan';
+    text-align: center;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, .2);
+    letter-spacing: 9px;
+}
+.content h1::after{
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0px;
+    z-index: 1;
+    display: block;
+    width: 100%; height: 1px;
+    background: rgba(0, 0, 0, .3) none;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .3);
+}
+.username,
+.content input[type='text']{
+    width: 142px; height: 34px;
+    margin: 50px 0px 0px 0px; padding: 1px 10px 0px 42px;
+    background: rgba(0, 0, 0, .12) url('/public/images/icon-user.svg') no-repeat;
+    background-size: 22px 22px;
+    background-position: 9px 6px;
+    border: 1px solid rgba(0, 0, 0, .39);
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .5) inset;
+    color: #fff;
+    font-size: 16px; line-height: 33px;
+}
+.content i,
+.content b{
+    position: absolute;
+    right: 18px; 
+    z-index: 1;
+    content: '';
+    width: 5px; height: 5px;
+    background: #9bea04 none;
+    border-radius: 5px;
+    opacity:0;
+    transition: opacity .5s;
+}
+.content i{
+    top: 115px;
+}
+.content b{
+    top: 173px;
+}
+
+
+.password,
+.content input[type='password']{
+    width: 142px; height: 34px;
+    margin: 20px 0px 0px 0px; padding: 1px 10px 0px 42px;
+    background: rgba(0, 0, 0, .12) url('/public/images/icon-pwd.svg') no-repeat;
+    background-size: 22px 22px;
+    background-position: 9px 6px;
+    border: 1px solid rgba(0, 0, 0, .39);
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .5) inset;
+    color: #fff;
+    font-size: 16px; line-height: 33px;
+}
+.content span,
+.content span:hover{
+    display: block;
+    width: 156px; height: 40px;
+    margin: 20px 0px 0px 0px;
+    background: #ec8b15 none;
+    border-top: 2px solid #deab1f;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, .8);
+    font-size: 20px; line-height: 37px;
+    font-family: 'YouYuan';
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 9px;
+    user-select: none;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, .6);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+.content span:hover{
+    opacity: 0.88;
+}
+.content span.not,
+.content span.not:hover{
+    background: #8b8379 none;
+    border-top: 2px solid #a3a3a3;
+    cursor: not-allowed;
+}
+
+
+
+
+/* 信息错误 */
+#message{
+    position: absolute;
+    top: -24px; left: 0px;
+    z-index: 3;
+    width: 100%;
+    color: #e5c29c;
+    font-size: 16px; line-height: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0px 0px 12px rgba(234, 7, 7, 0.5);
+    transition: opacity .5s linear;
+    opacity: 0;
+}
+#message.error{
+    animation: errormessage 1s linear 0s 1 normal;
+}
+@keyframes errormessage{
+    0%{
+        transform: scale(1, 1);
+    }
+    20%{
+        transform: scale(.82, 1.18);
+    }
+    40%{
+        transform: scale(1.14, .86);
+    }
+    60%{
+        transform: scale(.9, 1.1);
+    }
+    80%{
+        transform: scale(1.06, .94);
+    }
+    100%{
+        transform: scale(1, 1);
+    }
+}
+
+
+
+
+
+
+
+
