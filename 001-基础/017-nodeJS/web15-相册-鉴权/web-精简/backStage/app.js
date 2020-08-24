@@ -8,6 +8,8 @@ let whiteList = [
 ]
 // CORS
 app.use( async (ctx, next) => {
+    console.log( 'ctx.header--> ', ctx.header);
+
     let requestOrigin = ctx.header.origin;
     if ( whiteList.includes(requestOrigin) ) {
         ctx.set('Access-Control-Allow-Origin', requestOrigin);
@@ -21,6 +23,7 @@ app.use( async (ctx, next) => {
         ctx.set("Access-Control-Expose-Headers","Date,Authorization");
         ctx.set("Access-Control-Allow-Credentials",true);
         ctx.set("Access-Control-Max-Age", "1728000");
+        // ctx.set("Authorization", "1728000");
 
         ctx.body = '';
     }

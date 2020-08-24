@@ -16,6 +16,7 @@ module.exports = async function(ctx){
 
     let data = ctx.request.body;
     let {username, password} = data;
+    console.log( 'router - login [username, password]--> ', username, password);
 
     
     if (!username) {
@@ -54,17 +55,17 @@ module.exports = async function(ctx){
     }
 
     
-    ctx.set('Authorization', jwt.sign({
+    ctx.set('Authorization', 'bearer ' + jwt.sign({
         id: rs.id,
         username: rs.username
     }, 'greedwithfear.com',{ expiresIn: '9d' }));
     let token = {
-        'Authorization':jwt.sign({
+        'Authorization': 'bearer ' + jwt.sign({
             id: rs.id,
             username: rs.username
         }, 'greedwithfear.com')
     };
-    
+    console.log( '[token] - router - login--> ', token);
     
     ctx.body = {
         code: 1,

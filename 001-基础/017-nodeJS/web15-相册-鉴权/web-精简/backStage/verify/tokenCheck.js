@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports = (token)=>{
-    let user = jwt.verify(token, 'greedwithfear.com');
+    let user = jwt.verify(token.split(' ')[1], 'greedwithfear.com');
 
     if (!user) {
         ctx.status = 401;

@@ -2,7 +2,7 @@ const dbPhotos = require('../model/photos');
 const jwt = require('jsonwebtoken');
 
 let check = (ctx)=>{
-    return jwt.verify(ctx.header.authorization, 'greedwithfear.com');
+    return jwt.verify(ctx.header.authorization.split(' ')[1], 'greedwithfear.com');
 };
 
 
