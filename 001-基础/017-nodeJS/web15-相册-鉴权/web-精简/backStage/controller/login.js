@@ -54,7 +54,15 @@ module.exports = async function(ctx){
         };
     }
 
-    
+    /*
+        在登录成功后，添加 'bearer '
+        - 【注意：】要使用 koa-jwt 的话，在登录后，使用 jwt 压包的时候，在 token 前必须加上其独有的字段                   
+            + 只有添加了特定的 'Bearer ' 或 'bearer ' 字段（不区分大小写），后端路由收到请求时：                     
+                + 【特别注意】：Bearer 后面必须跟一个  ‘空格’。                          
+                + 检查请求头是否有 authorization ，如果没有 autoorization(同样不区分大小写)，直接拒绝访问。               
+                + 如果有 authorization ，则进行校验。 
+    */ 
+
     ctx.set('Authorization', 'bearer ' + jwt.sign({
         id: rs.id,
         username: rs.username
