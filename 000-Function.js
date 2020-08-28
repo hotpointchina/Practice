@@ -22,6 +22,43 @@ function zcss(el,attr){
 }
 
 
+//typeScript
+interface cssStyle{
+    [prop: string]: String   
+}
+
+
+function zcss(
+    el:HTMLDivElement,
+    attr: cssStyle 
+):String | undefined
+{
+    if(el){
+        if(typeof attr === 'string'){
+            return window.getComputedStyle(el)[attr] ;
+        }
+        if(typeof attr === 'object'){
+            for(let v in attr){
+                console.log('cooooo-->', v, attr[v]);
+                el.style[v] = attr[v];
+            }
+        }
+    }
+}
+
+
+let co = <HTMLDivElement>document.querySelector('.co');
+
+zcss(co, {
+   'background':'cornflowerblue',
+   'font-size': '18px',
+   'color':'#fff'
+});
+
+
+
+
+
 
 
 
