@@ -1,0 +1,10 @@
+{
+    "compileroptions":{
+        "outDir":"./dist",
+        "target":"es5",
+        "watch": true,
+        "strictNullCheck":true,
+        "noImlicitAny":true
+    },
+    "include": ["./src/**/*.ts"]
+}
