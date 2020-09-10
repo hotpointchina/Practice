@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+<title>ZPromise</title>
+</head>
+<body>
+    <h1>ZPromise</h1>
+</body>
+<script type="module">
+    // 'use strict'
+
+    import ZPromise from './ZPromise.js';
+
+    let zp = new ZPromise((resolve, reject)=>{
+        console.log('- ZPromise -');
+        resolve(55);
+    });
+
+    zp.then((res)=>{
+        console.log('zp-01-->',res);
+    });
+
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Promise - 原生</title>
+</head>
+<body>
+    <h1>Promise - 原生</h1>
+
+<script>
+    let p1 = new Promise((resolve, reject)=>{
+        console.log('p1 - inside --->');
+        resolve();
+    });
+
+    console.log('p1-->', p1);
+
+    let p2 = new Promise(console.log('p2 - inside --->'));
+
+    console.log('p2-->', p2);
+
+
+</script>
+</body>
+</html>
