@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>innerTest与textContent-022</title>
+</head>
+<body>
+    
+    <div class="test" id="test">
+        test
+        <div style="display:none">
+            <span>
+                test
+            </span>
+        </div>
+        <style>
+            hi
+            /* 
+                这样写是错误的写法
+                但是，textContent 会把这个 【hi】 给输出出去
+            */
+        </style>
+    </div>
+
+</body>
+<script>
+    var testDiv = document.getElementById('test');
+    console.log("我是textContent输出的"+testDiv.textContent);
+    console.log("我是innerText输出的"+testDiv.innerText);
+</script>
+</html>
