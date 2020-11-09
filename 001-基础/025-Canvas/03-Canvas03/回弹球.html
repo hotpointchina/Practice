@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+    body{margin: 0px; padding: 0px;overflow: hidden; text-align: center;}
+    #stage{background: LightSteelBlue none;margin: 20px auto;}
+</style>
+<title>回弹球</title>
+</head>
+<body>
+<canvas id='stage'></canvas>
+<script>
+
+    var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                                window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
+    const canvas = document.getElementById('stage');
+    canvas.width = window.innerWidth*0.8;
+    canvas.height = window.innerHeight*0.9;
+
+    // canvas 的信息
+    const canvasInfo = (()=>{
+        const {width, height} = canvas;
+        const {top, bottom, left, right} = canvas.getBoundingClientRect();
+        return {width, height, top, bottom, left, right};
+    })();
+    const context = canvas.getContext('2d');
+
+    
+    class Ball{
+        constructor(opt){
+            let option = {x:0,y:0,r:50,color:'cornflowerblue',pick:false, frozen:true};
+            option = {
+                ...option,
+                ...opt
+            };
+            Object.keys(option).forEach(key=>{
+                this[key] = option[key];
+            });
+        }
+
+        paint(context){
+            const {x,y,r,color} = this;
+            context.save();
+            context.beginPath();
+            context.fillStyle = color;
+            context.arc(x, y, r, 0, Math.PI*2);
+            context.fill();
+            context.restore();
+        }
+    }
+
+    
+    // 初始设定信息
+    const beingPosition = (()=>{
+        const {bottom, top, width} = canvasInfo;
+        const [x, r] = [width / 2, 50];
+        const y = bottom - top - r;
+        return {x,y,r};
+    })();
+    const ball = new Ball({
+        ...beingPosition,
+        pick:false,
+        frozen:true
+    });
+    ball.paint(context);
+    
+    const triangleAB = {a:0,b:0};
+    canvas.addEventListener('mousedown', mousedownFN);
+
+    // 鼠标按下
+    function mousedownFN(e){
+        const mousePosition = getMousePosition(e);
+        
+        triangleAB.a = mousePosition.x - ball.x;
+        triangleAB.b = mousePosition.y - ball.y;
+        ball.pick = inball(ball);
+        
+        canvas.addEventListener('mousemove', mouseMoveFN);
+    }
+
+
+    // 鼠标抬起
+    canvas.addEventListener('mouseup', handsOff);
+    document.addEventListener('mouseup', handsOff);
+    function handsOff(){
+        if(ball.pick){
+            letGo();
+        }
+        ball.pick = false;
+    }
+
+
+    function mouseMoveFN(e){
+        const {x,y} = getMousePosition(e);
+        const {a,b} = triangleAB;
+
+        // 圆心点位置
+        let centrePoint = {
+            x: x - a,
+            y: y - b
+        };
+
+        // 过界处理
+        const {left,right, bottom, top} = canvasInfo;
+        centrePoint.x = Math.max(ball.r, centrePoint.x);
+        centrePoint.x = Math.min(right-left-ball.r, centrePoint.x);
+        centrePoint.y = Math.min((bottom-top-ball.r), centrePoint.y);
+        centrePoint.y = Math.max(ball.r, centrePoint.y);
+
+        if(ball.pick){
+            ball.x = centrePoint.x;
+            ball.y = centrePoint.y;
+            render();
+        }
+    }
+
+    // 获取鼠标在 Canvas 中的位置
+    function getMousePosition(e){
+        const now = {
+            x:e.clientX,
+            y:e.clientY,
+        };
+        const {top,left} = canvasInfo;
+        const position = {
+            x: now.x - left,
+            y: now.y - top
+        };
+        return {...position};
+    }
+
+
+
+    // 是否在点击了小球
+    function inball(obj){
+        const {a,b} = triangleAB;
+        const cLine = Math.sqrt(a*a + b*b);
+        return cLine < obj.r && obj.frozen;
+    }
+
+    function render(){
+        context.clearRect(0,0,canvas.width,canvas.height);
+        ball.paint(context);
+    }
+
+
+    function letGo(){
+        let vy = 0.2;
+        const [ay,bounce] = [0.003, 0.88];
+        const {width, height, top} = canvasInfo;
+        let timer = new Date();
+        let fallen = false;
+        let fallenCount = 0;
+        let raf = 0;
+
+        const falling = ()=>{
+            const now = new Date();
+            const diff = now - timer;
+            timer = now;
+            fallen = true;
+            ball.frozen = false;
+
+            context.clearRect(0,0, width, height);
+            vy += ay*diff;
+            ball.y += vy * diff;
+
+            if(ball.y+ball.r > height){
+                ball.y = height-ball.r;
+                vy *= -bounce;
+            }
+            ball.paint(context);
+            raf = requestAnimationFrame(falling);
+        };
+        falling();
+
+        let setInt = setInterval(()=>{
+            if(fallen && ball.y == height-ball.r){
+                fallenCount++;
+                if(fallenCount > 5){
+                    window.cancelAnimationFrame(raf);
+                    fallen = false;
+                    ball.frozen = true;
+                    clearInterval(setInt);
+                    setInt = 0;
+                }
+            }
+        }, 100);
+
+        window.addEventListener('visibilitychange',function(){
+            timer=new Date();
+        });
+    }
+
+</script>    
+</body>
+</html>
