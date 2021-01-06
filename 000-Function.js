@@ -434,4 +434,18 @@ function rgbToHex(r, g, b) {
 }
 
 
-
+/*
+	对比两个数组 / 对比两个有 id 的数组
+	userMarkColor 与 MarkChooseColor
+	取出差异的项目
+*/ 
+residueColorFN(){
+	const ids = this.userMarkColor.map(item=>item.id);
+	let arr = [...this.MarkChooseColor];
+	ids.forEach(id=>{
+		arr = arr.filter(it=>it.id !== id);
+	});
+	console.log('剩余的标记色-->', arr);
+	arr.sort((a,b)=>a.order - b.order);
+	return [...arr];
+}
