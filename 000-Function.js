@@ -449,3 +449,37 @@ residueColorFN(){
 	arr.sort((a,b)=>a.order - b.order);
 	return [...arr];
 }
+
+
+
+// 日期标记 Object 深拷贝
+export function copyObject(obj){
+	let zobj = {};
+	
+	const fn = (data, target) =>{
+		Object.keys(data).forEach(it=>{
+			if( typeof(data[it]) === 'string' ){
+				target[it] = data[it];
+				
+			}else if( typeof(data[it]) === 'number' ){
+				target[it] = data[it];
+				
+			}else if( typeof(data[it]) === 'object' && !Array.isArray(data[it]) ){
+				target[it] = {};
+				fn(data[it], target[it]);
+				
+			}else if( Array.isArray(data[it]) ){
+				target[it] = [];
+				for (let i=0; i < data[it].length; i++) {
+					target[it][i] = {};
+					fn(data[it][i], target[it][i]);
+				}
+			}
+		});
+	};
+	fn(obj, zobj);
+	
+	return zobj;
+}
+
+
