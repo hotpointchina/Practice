@@ -483,3 +483,53 @@ export function copyObject(obj){
 }
 
 
+
+/*
+	对比 2 个 对象型数组的差异
+		- targetArr : 目标数组
+		- defaultArr：默认的数组
+		- option:{
+			key: 依据那一个 key 进行对比
+			order : 返回的数组，依据什么进行排序，如果不传，则不进行排序
+			orderby: 从小到大 (升序) or 从大到小 (降序)
+				+ asc  - 升序
+				+ desc - 降序
+			deep: 是否对数组中的每一个 Object 进行 深层复制
+		}
+		
+	return：
+		- targetArr 将覆盖 defaultArr 后返回
+		- targetArr 中缺少的标注项目（key）从 默认数据中提取补全
+*/ 
+export function contrast2objArray(targetArr, defaultArr, option){
+	option = {
+		...{key:'id', order:'', orderby:'asc', deep:false},
+		...option
+	};
+	const {key, order, orderby, deep} = option;
+	
+	let arr = [];
+	const targetKeys = targetArr.map(item=>item[key]);
+	targetKeys.forEach(item =>{
+		defaultArr = defaultArr.filter(it=>it[key] !== item);
+	});
+	
+	arr = targetArr.concat(defaultArr);
+	if(order !== ''){
+		if(orderby === 'asc'){
+			arr = [...arr].sort((a,b)=>a[order] - b[order]);
+		}else{
+			arr = [...arr].sort((a,b)=>b[order] - a[order]);
+		}
+	}
+	
+	
+	if(deep){
+		arr.forEach(obj=>{
+			obj = copyObject(obj);
+		});
+	}
+	// console.log('合成后的 Array -->', arr);
+	return arr;
+}	
+
