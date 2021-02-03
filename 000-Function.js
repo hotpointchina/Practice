@@ -452,35 +452,66 @@ residueColorFN(){
 
 
 
-// 日期标记 Object 深拷贝
-export function copyObject(obj){
-	let zobj = {};
+
+
+// 深层复制、深拷贝、deepCopy
+function deepCopy( oa ){
 	
-	const fn = (data, target) =>{
+    let zobar = null;
+
+    if(  
+        Array.isArray( oa ) &&
+        typeof( oa ) === 'object'
+    ){
+        zobar = [];
+        ArrFN(oa, zobar);
+    }
+
+    if(  
+        !Array.isArray( oa ) &&
+        typeof( oa ) === 'object'
+    ){
+        zobar = {};
+        objFN( oa, zobar );
+    }
+
+    
+    function ArrFN(data, target){
+        for (let i=0; i < data.length; i++) {
+            
+            const type = typeof( data[i] );
+            switch(type){
+                case 'object':
+                    target[i] = deepCopy( data[i] );
+                    break ;
+                default:
+                    target[i] = data[i];
+                    break ;
+            }
+        }
+    }
+
+
+	function objFN(data, target){
 		Object.keys(data).forEach(it=>{
-			if( typeof(data[it]) === 'string' ){
-				target[it] = data[it];
-				
-			}else if( typeof(data[it]) === 'number' ){
-				target[it] = data[it];
-				
-			}else if( typeof(data[it]) === 'object' && !Array.isArray(data[it]) ){
-				target[it] = {};
-				fn(data[it], target[it]);
-				
-			}else if( Array.isArray(data[it]) ){
-				target[it] = [];
-				for (let i=0; i < data[it].length; i++) {
-					target[it][i] = {};
-					fn(data[it][i], target[it][i]);
-				}
-			}
+
+            const type = typeof(data[it]);
+            switch(type){
+                case 'object':
+                    target[it] = deepCopy( data[it] );
+                    break ;
+                default:
+                    target[it] = data[it];
+                    break ;
+            }
 		});
-	};
-	fn(obj, zobj);
-	
-	return zobj;
+    }
+    
+
+	return zobar;
 }
+
+
 
 
 
