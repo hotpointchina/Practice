@@ -564,3 +564,32 @@ export function contrast2objArray(targetArr, defaultArr, option){
 	return arr;
 }	
 
+
+
+
+
+// 将给定的数组，按照给定的数字进行分组后返回
+export function arrGetGroup(arr, num){
+	return arr.reduce( (acc,cur)=>{
+	    let  {count, arr} = acc;
+	    
+	    if( count % num === 0){
+	        arr.push( [] );
+	    }
+	    
+		count++;
+	    arr.sort( (a,b)=> b.length - a.length );
+	    arr[arr.length-1].push(cur);
+	
+	    return acc={
+	        count,
+	        arr
+	    };
+	}, { count:0, arr:[] } ).arr;
+}
+
+
+
+
+
+
